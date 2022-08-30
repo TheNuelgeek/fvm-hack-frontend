@@ -3,13 +3,13 @@ import BigNumber from 'bignumber.js'
 import { getFullDecimalMultiplier } from 'utils/getFullDecimalMultiplier'
 import { BIG_ZERO, BIG_TWO } from '../../utils/bigNumber'
 import { fetchPublicFarmsData } from './fetchPublicFarmData'
-import { fetchMasterChefData } from './fetchMasterChefData'
+import { fetchwkdLpPoolData } from './fetchWkdLpPoolData'
 import { SerializedFarm } from '../types'
 
 const fetchFarms = async (farmsToFetch: SerializedFarmConfig[]): Promise<SerializedFarm[]> => {
-  const [farmResult, masterChefResult] = await Promise.all([
+  const [farmResult, wkdLpPoolResult] = await Promise.all([
     fetchPublicFarmsData(farmsToFetch),
-    fetchMasterChefData(farmsToFetch),
+    fetchwkdLpPoolData(farmsToFetch),
   ])
 
   return farmsToFetch.map((farm, index) => {
@@ -22,7 +22,7 @@ const fetchFarms = async (farmsToFetch: SerializedFarmConfig[]): Promise<Seriali
       [quoteTokenDecimals],
     ] = farmResult[index]
 
-    const [info, totalRegularAllocPoint] = masterChefResult[index]
+    const [info, totalRegularAllocPoint] = wkdLpPoolResult[index]
 
     const lpTotalSupplyBN = new BigNumber(lpTotalSupply)
 

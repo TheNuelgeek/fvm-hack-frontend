@@ -16,7 +16,7 @@ import { DesktopV2ColumnSchema } from '../../types'
 
 const OldFarmStep1: React.FC = () => {
   const { account } = useWeb3React()
-  const { data: farmsLP, userDataLoaded, regularCakePerBlock } = useFarms()
+  const { data: farmsLP, userDataLoaded, regularWkdPerBlock } = useFarms()
   const { data: farmsV1LP } = useFarmsV1()
   const cakePrice = usePriceCakeBusd()
 
@@ -50,19 +50,19 @@ const OldFarmStep1: React.FC = () => {
           return farm
         }
         const totalLiquidity = new BigNumber(farm.lpTotalInQuoteToken).times(farm.quoteTokenPriceBusd)
-        const { cakeRewardsApr, lpRewardsApr } = getFarmApr(
+        const { wkdRewardsApr, lpRewardsApr } = getFarmApr(
           new BigNumber(farm.poolWeight),
           cakePrice,
           totalLiquidity,
           farm.lpAddresses[ChainId.BSC],
-          regularCakePerBlock,
+          regularWkdPerBlock,
         )
-        return { ...farm, apr: cakeRewardsApr, lpRewardsApr, liquidity: totalLiquidity }
+        return { ...farm, apr: wkdRewardsApr, lpRewardsApr, liquidity: totalLiquidity }
       })
 
       return farmsToDisplayWithAPR
     },
-    [cakePrice, regularCakePerBlock],
+    [cakePrice, regularWkdPerBlock],
   )
 
   const chosenFarmsMemoized = useMemo(() => {
@@ -84,7 +84,7 @@ const OldFarmStep1: React.FC = () => {
         lpSymbol: farm.lpSymbol,
         tokenAddress,
         quoteTokenAddress,
-        cakePrice,
+        wkdPrice: cakePrice,
         originalValue: farm.apr,
       },
       farm: {

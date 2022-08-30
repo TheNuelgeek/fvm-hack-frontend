@@ -8,8 +8,9 @@ import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit'
 import stringify from 'fast-json-stable-stringify'
 import farmsConfig from 'config/constants/farms'
 import multicall from 'utils/multicall'
-import masterchefABI from 'config/abi/masterchef.json'
-import { getMasterChefAddress } from 'utils/addressHelpers'
+// import masterchefABI from 'config/abi/masterchef.json'
+import wkdPoolABI from 'config/abi/wkdLpPool.json'
+import { getWkdPoolAddress } from 'utils/addressHelpers'
 import { getBalanceAmount } from 'utils/formatBalance'
 import { ethersToBigNumber } from 'utils/bigNumber'
 import type { AppState } from 'state'
@@ -22,7 +23,7 @@ import {
   fetchFarmUserStakedBalances,
 } from './fetchFarmUser'
 import { SerializedFarmsState, SerializedFarm } from '../types'
-import { fetchMasterChefFarmPoolLength } from './fetchMasterChefData'
+import { fetchWkdLpPoolFarmPoolLength } from './fetchWkdLpPoolData'
 import { resetUserState } from '../global/actions'
 
 const noAccountFarmConfig = farmsConfig.map((farm) => ({
@@ -52,27 +53,29 @@ export const fetchFarmsPublicDataAsync = createAsyncThunk<
 >(
   'farms/fetchFarmsPublicDataAsync',
   async (pids) => {
-    const masterChefAddress = getMasterChefAddress()
+    // const masterChefAddress = getMasterChefAddress()
+    const wkdPoolAddress = getWkdPoolAddress()
     const calls = [
       {
-        address: masterChefAddress,
+        address: wkdPoolAddress,
         name: 'poolLength',
       },
       {
-        address: masterChefAddress,
-        name: 'cakePerBlock',
+        address: wkdPoolAddress,
+        name: 'wkdPerBlock',
         params: [true],
       },
     ]
-    const [[poolLength], [cakePerBlockRaw]] = await multicall(masterchefABI, calls)
-    const regularCakePerBlock = getBalanceAmount(ethersToBigNumber(cakePerBlockRaw))
+    const [[poolLength], [wkdPerBlockRaw]] = await multicall(wkdPoolABI, calls)
+    const regularWkdPerBlock = getBalanceAmount(ethersToBigNumber(wkdPerBlockRaw), 9) // wkd is in 9 decimal
     const farmsToFetch = farmsConfig.filter((farmConfig) => pids.includes(farmConfig.pid))
     const farmsCanFetch = farmsToFetch.filter((f) => poolLength.gt(f.pid))
 
     const farms = await fetchFarms(farmsCanFetch)
+
     const farmsWithPrices = getFarmsPrices(farms)
 
-    return [farmsWithPrices, poolLength.toNumber(), regularCakePerBlock.toNumber()]
+    return [farmsWithPrices, poolLength.toNumber(), regularWkdPerBlock.toNumber()]
   },
   {
     condition: (arg, { getState }) => {
@@ -103,7 +106,7 @@ export const fetchFarmUserDataAsync = createAsyncThunk<
 >(
   'farms/fetchFarmUserDataAsync',
   async ({ account, pids }) => {
-    const poolLength = await fetchMasterChefFarmPoolLength()
+    const poolLength = await fetchWkdLpPoolFarmPoolLength()
     const farmsToFetch = farmsConfig.filter((farmConfig) => pids.includes(farmConfig.pid))
     const farmsCanFetch = farmsToFetch.filter((f) => poolLength.gt(f.pid))
     const [userFarmAllowances, userFarmTokenBalances, userStakedBalances, userFarmEarnings] = await Promise.all([
@@ -173,13 +176,13 @@ export const farmsSlice = createSlice({
     })
     // Update farms with live data
     builder.addCase(fetchFarmsPublicDataAsync.fulfilled, (state, action) => {
-      const [farmPayload, poolLength, regularCakePerBlock] = action.payload
+      const [farmPayload, poolLength, regularWkdPerBlock] = action.payload
       state.data = state.data.map((farm) => {
         const liveFarmData = farmPayload.find((farmData) => farmData.pid === farm.pid)
         return { ...farm, ...liveFarmData }
       })
       state.poolLength = poolLength
-      state.regularCakePerBlock = regularCakePerBlock
+      state.regularWkdPerBlock = regularWkdPerBlock
     })
 
     // Update farms with user data

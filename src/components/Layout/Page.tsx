@@ -3,13 +3,13 @@ import { useTranslation } from 'contexts/Localization'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { DEFAULT_META, getCustomMeta } from 'config/constants/meta'
-import { useCakeBusdPrice } from 'hooks/useBUSDPrice'
 import Container from './Container'
 
 const StyledPage = styled(Container)`
   min-height: calc(100vh - 64px);
   padding-top: 16px;
   padding-bottom: 16px;
+  // background: ${({ theme }) => theme.colors.gradients.bubblegum};
 
   ${({ theme }) => theme.mediaQueries.sm} {
     padding-top: 24px;
@@ -22,18 +22,38 @@ const StyledPage = styled(Container)`
   }
 `
 
+// const StyledPage = styled.div<{ $removePadding: boolean; $noMinHeight }>`
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+//   width: 100%;
+//   padding: ${({ $removePadding }) => ($removePadding ? '0' : '16px')};
+//   padding-bottom: 0;
+//   min-height: ${({ $noMinHeight }) => ($noMinHeight ? 'initial' : 'calc(100vh - 64px)')};
+//   background: ${({ theme }) => theme.colors.gradients.bubblegum};
+//   ${({ theme }) => theme.mediaQueries.xs} {
+//     background-size: auto;
+//   }
+//   ${({ theme }) => theme.mediaQueries.sm} {
+//     padding: ${({ $removePadding }) => ($removePadding ? '0' : '24px')};
+//     padding-bottom: 0;
+//   }
+//   ${({ theme }) => theme.mediaQueries.lg} {
+//     padding: ${({ $removePadding }) => ($removePadding ? '0' : '32px')};
+//     padding-bottom: 0;
+//     min-height: ${({ $noMinHeight }) => ($noMinHeight ? 'initial' : 'calc(100vh - 100px)')};
+//   }
+// `
+
 export const PageMeta: React.FC<{ symbol?: string }> = ({ symbol }) => {
   const {
     t,
     currentLanguage: { locale },
   } = useTranslation()
   const { pathname } = useRouter()
-  const cakePriceUsd = useCakeBusdPrice()
-  const cakePriceUsdDisplay = cakePriceUsd ? `$${cakePriceUsd.toFixed(3)}` : '...'
-
   const pageMeta = getCustomMeta(pathname, t, locale) || {}
-  const { title, description, image } = { ...DEFAULT_META, ...pageMeta }
-  let pageTitle = cakePriceUsdDisplay ? [title, cakePriceUsdDisplay].join(' - ') : title
+  const { title, description } = { ...DEFAULT_META, ...pageMeta }
+  let pageTitle = title
   if (symbol) {
     pageTitle = [symbol, title].join(' - ')
   }
@@ -43,7 +63,6 @@ export const PageMeta: React.FC<{ symbol?: string }> = ({ symbol }) => {
       <title>{pageTitle}</title>
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
-      <meta property="og:image" content={image} />
     </Head>
   )
 }
