@@ -1,4 +1,4 @@
-# WKDSwap Frontend
+# Vertex Finance Frontend
 
 This project is a fork of [pancake-frontend](https://github.com/pancakeswap/pancake-frontend) repository
 
