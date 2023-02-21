@@ -3,7 +3,7 @@ import { ContextApi } from 'contexts/Localization/types'
 import { PageMeta } from './types'
 
 export const DEFAULT_META: PageMeta = {
-  title: 'WKDSwap',
+  title: 'VTSwap',
   description: 'A DEX for swapping, staking, and lots more...',
 }
 
@@ -43,7 +43,7 @@ const getPathList = (t: ContextApi['t']): PathList => {
       '/pancake-squad': { basePath: true, title: t('Pancake Squad') },
       '/pottery': { basePath: true, title: t('Pottery') },
     },
-    defaultTitleSuffix: t('WKDSwap'),
+    defaultTitleSuffix: t('Vertex FInance'),
   }
 }
 

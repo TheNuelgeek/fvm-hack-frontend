@@ -80,27 +80,27 @@ export const socials = [
   {
     label: "Twitter",
     icon: TwitterIcon,
-    href: "https://twitter.com/Wakandainu",
+    href: "https://twitter.com/",
   },
   {
     label: "Telegram",
     icon: TelegramIcon,
-    href: "https://t.me/wakandainu",
+    href: "",
   },
   {
     label: "facebook",
     icon: facebookIcon,
-    href: "https://fb.me/Wakandainu",
+    href: "",
   },
   {
     label: "Github",
     icon: GithubIcon,
-    href: "https://github.com/wakandaswap",
+    href: "https://github.com/TheNuelgeek",
   },
   {
     label: "Medium",
     icon: MediumIcon,
-    href: "https://wakandainu.medium.com/",
+    href: "",
   },
 ];
 

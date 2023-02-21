@@ -86,7 +86,7 @@ const MenuItem: React.FC<FooterProps> = ({
               <Flex className="icon" alignItems="center" height="32px">
                 <LogoIcon height="32px" className="icon-image" />
                 <Text bold color="primary" marginLeft={1}>
-                  WKDSwap
+                  VF
                 </Text>
               </Flex>
             </StyledLink>

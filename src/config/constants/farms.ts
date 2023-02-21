@@ -12,7 +12,7 @@ const farms: SerializedFarmConfig[] = [
    */
   {
     pid: 0,
-    lpSymbol: 'WKD-BUSD LP',
+    lpSymbol: 'FVM-BUSD LP',
     lpAddresses: {
       // eslint-disable-next-line spaced-comment
       97: '0xDCE6F4AA26af7E5A2dA147B9f4D5aD03d624eA72', //USELESS

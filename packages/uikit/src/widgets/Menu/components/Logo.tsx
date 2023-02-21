@@ -57,7 +57,7 @@ const Logo: React.FC<Props> = ({ isDark, href }) => {
       <Flex className="desktop-icon" alignItems="center">
         <LogoIcon className="desktop-icon-image" />
         <Text bold color="secondary" marginLeft={1}>
-          WKDSwap
+          Vertex Finance
         </Text>
       </Flex>
     </>

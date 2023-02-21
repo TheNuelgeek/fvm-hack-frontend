@@ -52,11 +52,11 @@
     },
     {
       "name": "Wakanda Inu Token",
-      "symbol": "WKD",
+      "symbol": "FVM",
       "address": "0x5344C20FD242545F31723689662AC12b9556fC3d",
       "chainId": 56,
       "decimals": 9,
-      "logoURI": "https://assets-cdn.trustwallet.com/blockchains/smartchain/assets/0x5344C20FD242545F31723689662AC12b9556fC3d/logo.png"
+      "logoURI": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOh2vDVjgzS36O9asolblqTVhCzchTP6yKhg&usqp=CAU"
     },
     {
       "name": "Venus",
@@ -124,11 +124,11 @@
     },
     {
       "name": "Wakanda Inu Token",
-      "symbol": "WKD",
+      "symbol": "FVM",
       "address": "0x677e88192637BD63d5e8fA81F99DAbA95B13C118",
       "chainId": 97,
       "decimals": 9,
-      "logoURI": "https://assets-cdn.trustwallet.com/blockchains/smartchain/assets/0x5344C20FD242545F31723689662AC12b9556fC3d/logo.png"
+      "logoURI": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOh2vDVjgzS36O9asolblqTVhCzchTP6yKhg&usqp=CAU"
     },
     {
       "name": "BUSD Token",

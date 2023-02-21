@@ -1,5 +1,6 @@
 import { ChainId, Token, WBNB } from '@pancakeswap/sdk'
 
+// cHECJJJJJJ
 const WKD_MAINET = new Token(
   ChainId.BSC,
   '0x5344C20FD242545F31723689662AC12b9556fC3d',
